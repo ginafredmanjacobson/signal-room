@@ -1,19 +1,25 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings
+from pydantic import ConfigDict
 
 
-class Settings(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        extra="ignore",          # ignore any env vars you haven't declared
-        case_sensitive=False,    # allow OPENAI_MODEL or openai_model
-    )
+class Settings (BaseSettings):
+    APP_NAME: str = "SignalRoom"
+    DEBUG: bool = False
 
-    APP_NAME: str = "Signal Room"
-    OPENAI_API_KEY: str
-    OPENAI_MODEL: str = "gpt-4o-mini"
-    AI_MODE: str = "mock" # mock | openai
-    EMBEDDINGS_MODE: str = "local" # local | openai
-    PORT: int = 8000
+
+    DATABASE_URL: str = "sqlite:///./signalroom.db"
+
+    OPENAI_AI_KEY: str = ""
+    AI_MODE: str = "mock" # "live" or "mock"
+
+    REDDIT_CLIENT_ID: str = ""
+    REDDIT_CLIENT_SECRET: str = ""
+    REDDIT_USER_AGENT: str = "SIgalRoom/1.0"
+
+    RSS_FEEDS: str = ""
+
+    model_config + ConfigDict(env_file=".env", extra="ignore")
 
 
 settings = Settings()
+
