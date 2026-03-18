@@ -4,7 +4,6 @@ from app.api.ingest import router as ingest_router
 #from app.api.embed_test import router as embed_router
 
 router = APIRouter()
-router.include_router(ai_router, prefix="/ai")
 
 router.include_router(ai_router, prefix="/ai")
 router.include_router(ingest_router, prefix="/ingest")
