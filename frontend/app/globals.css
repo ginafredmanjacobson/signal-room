@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-gray-50 text-gray-900;
+    }
+    h1 {
+        @apply text-3xl font-bold tracking-tight;
+    }
+    h2 {
+        @apply text-xl font-semibold;
+    }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}

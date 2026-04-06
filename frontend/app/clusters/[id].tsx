@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getCluster, generateBrief, Cluster } from '@/lib/api';
 import Link from 'next/link';
+import Spinner from '@/components/Spinner';
 
 export default function ClusterDetail() {
   const { id } = useParams();
@@ -33,8 +34,7 @@ export default function ClusterDetail() {
     try {
       const data = await generateBrief(Number(id));
       setBrief(data);
-      // Refresh cluster to get updated summary
-      loadCluster();
+      loadCluster(); // refresh to get updated summary
     } catch (error) {
       console.error('Brief generation failed', error);
     } finally {
@@ -42,60 +42,91 @@ export default function ClusterDetail() {
     }
   };
 
-  if (loading) return <p className="p-4">Loading...</p>;
-  if (!cluster) return <p className="p-4">Cluster not found</p>;
+  if (loading) return <Spinner />;
+  if (!cluster) return <div className="text-center py-16">Cluster not found</div>;
 
   return (
-    <main className="container mx-auto p-4">
-      <Link href="/" className="text-blue-600 mb-4 inline-block">← Back to dashboard</Link>
-      
-      <h1 className="text-3xl font-bold mb-2">{cluster.topic}</h1>
-      <div className="mb-4 text-gray-600">
-        <span>Momentum: {cluster.momentum.toFixed(2)}</span> | 
-        <span> {cluster.items.length} items</span>
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <Link href="/" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-6">
+          ← Back to dashboard
+        </Link>
 
-      {cluster.summary && (
-        <div className="mb-6 p-4 bg-gray-50 rounded">
-          <h2 className="text-xl font-semibold mb-2">Summary</h2>
-          <p>{cluster.summary}</p>
-        </div>
-      )}
-
-      <button
-        onClick={handleGenerateBrief}
-        disabled={generating}
-        className="bg-green-600 text-white px-4 py-2 rounded mb-6 hover:bg-green-700 disabled:bg-gray-400"
-      >
-        {generating ? 'Generating...' : 'Generate Insight Brief'}
-      </button>
-
-      {brief && (
-        <div className="mb-6 p-4 bg-blue-50 rounded">
-          <h2 className="text-xl font-semibold mb-2">Generated Brief</h2>
-          <p className="mb-2">{brief.summary}</p>
-          <ul className="list-disc pl-5">
-            {brief.bullets.map((b, i) => <li key={i}>{b}</li>)}
-          </ul>
-        </div>
-      )}
-
-      <h2 className="text-2xl font-semibold mb-4">Source Items</h2>
-      <div className="space-y-4">
-        {cluster.items.map((item) => (
-          <div key={item.id} className="border p-4 rounded">
-            <h3 className="text-lg font-medium">
-              <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                {item.title}
-              </a>
-            </h3>
-            <p className="text-gray-600 text-sm mb-2">
-              {item.author} • {new Date(item.published_at).toLocaleDateString()} • Score: {item.score}
-            </p>
-            <p className="text-gray-800">{item.content.slice(0, 200)}...</p>
+        <div className="bg-white rounded-xl shadow-sm border p-6 mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">{cluster.topic}</h1>
+          <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
+            <span>🔥 Momentum: {Math.round(cluster.momentum)}%</span>
+            <span>📄 {cluster.items.length} source items</span>
           </div>
-        ))}
+
+          {cluster.summary && (
+            <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6">
+              <h2 className="font-semibold text-gray-900 mb-2">Summary</h2>
+              <p className="text-gray-700">{cluster.summary}</p>
+            </div>
+          )}
+
+          <button
+            onClick={handleGenerateBrief}
+            disabled={generating}
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 transition"
+          >
+            {generating ? 'Generating...' : '✨ Generate Insight Brief'}
+          </button>
+        </div>
+
+        {brief && (
+          <div className="bg-white rounded-xl shadow-sm border p-6 mb-8 animate-fadeIn">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">AI‑Generated Brief</h2>
+            <p className="text-gray-700 mb-4">{brief.summary}</p>
+            <ul className="space-y-2">
+              {brief.bullets.map((bullet, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="text-green-600 mt-1">•</span>
+                  <span className="text-gray-700">{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+          <div className="px-6 py-4 border-b bg-gray-50">
+            <h2 className="font-semibold text-gray-900">Source Items</h2>
+          </div>
+          <div className="divide-y">
+            {cluster.items.map((item) => (
+              <div key={item.id} className="p-6 hover:bg-gray-50 transition">
+                <div className="flex justify-between items-start gap-4">
+                  <div className="flex-1">
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg font-medium text-blue-600 hover:underline"
+                    >
+                      {item.title}
+                    </a>
+                    <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
+                      <span>{item.author || 'Unknown author'}</span>
+                      <span>•</span>
+                      <span>{new Date(item.published_at).toLocaleDateString()}</span>
+                      <span>•</span>
+                      <span className="inline-flex items-center gap-1">
+                        ⭐ {item.score}
+                      </span>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-gray-100">
+                        {item.source?.name || 'RSS'}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-gray-600 line-clamp-3">{item.content}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }
