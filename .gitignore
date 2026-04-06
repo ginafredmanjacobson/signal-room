@@ -1,9 +1,46 @@
-.venv/
+# Environment variables
 .env
-__pycache__/
-node_modules/
-dist/
-build/
-*.sqlite3
+.env.local
+.env.*.local
+
+# Database files
 *.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Backend
+backend/.env
+backend/*.db
+backend/app/db/*.db
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
