@@ -25,13 +25,14 @@ def generate_cluster_brief(cluster_id: int, db: Session = Depends(get_db)):
     if not cluster:
         raise HTTPException(status_code=404, detail="Cluster not found")
     
-    items = [ci.item for ci in cluster.items]
+    # Directly use cluster.items (already list of Item objects)
+    items = cluster.items
     texts = [f"{item.title}: {item.content}" for item in items if item.content]
     if not texts:
         return {"summary": "No content available", "bullets": []}
     
     brief = generate_brief(texts, cluster.topic)
-    # Optionally store the brief in cluster.summary
+    # Optionally store the summary in the cluster
     cluster.summary = brief["summary"]
     db.commit()
     return brief
