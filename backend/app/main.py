@@ -12,9 +12,7 @@ app = FastAPI(title=settings.APP_NAME)
 # CORS for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-    "http://localhost:3000",
-    "https://signal-room-59a79fhoe-ginafredmanjacobsons-projects.vercel.app/"   # your actual Vercel frontend URL
+    aallow_origins=["*"],   # your actual Vercel frontend URL
 ],  # Next.js dev server
     allow_credentials=True,
     allow_methods=["*"],
