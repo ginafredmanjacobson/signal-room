@@ -24,3 +24,7 @@ app.include_router(api_router, prefix="/api")
 @app.get("/")
 def root():
     return {"message": "SignalRoom API is running"}
+
+@app.get("/ping")
+def ping():
+    return {"status": "ok"}
