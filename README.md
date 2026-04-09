@@ -123,12 +123,10 @@ cd frontend
 npm install
 echo "NEXT_PUBLIC_API_URL=http://localhost:8000/api" > .env.local
 npm run dev
-
----
+```
 
 ## Screenshots
 
 ![Dashboard](screenshots/dashboard.png)
-![Cluster Detail](screenshots/cluster.png)
+![Cluster Deatil](screenshots/cluster.png)
 ![AI Summary](screenshots/summary.png)
-
