@@ -130,3 +130,30 @@ npm run dev
 ![Dashboard](screenshots/dashboard.png)
 ![Cluster Deatil](screenshots/cluster.png)
 ![AI Summary](screenshots/summary.png)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
+
+You are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, subject to including the original copyright notice.
+
+---
+
+## 🙌 Acknowledgements
+
+SignalRoom is made possible by these amazing open‑source projects and services:
+
+- [FastAPI](https://fastapi.tiangolo.com/) – Modern Python web framework
+- [Next.js](https://nextjs.org/) – React framework for the frontend
+- [Tailwind CSS](https://tailwindcss.com/) – Utility‑first CSS framework
+- [scikit‑learn](https://scikit-learn.org/) – Machine learning for clustering
+- [OpenAI](https://openai.com/) – GPT‑4o‑mini for insight generation
+- [PRAW](https://praw.readthedocs.io/) – Reddit API wrapper
+- [feedparser](https://pythonhosted.org/feedparser/) – RSS feed parsing
+- [SQLAlchemy](https://www.sqlalchemy.org/) – SQL toolkit and ORM
+- [Render](https://render.com/) – Free backend hosting
+- [Vercel](https://vercel.com/) – Free frontend hosting
+
+Big thanks to the open‑source community for making tools like these available to everyone.
