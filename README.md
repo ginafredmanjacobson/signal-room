@@ -84,7 +84,7 @@ SignalRoom ingests culture signals from Reddit + RSS, clusters conversations int
 
 ---
 
-## 📡 API Endpoints (available after deployment)
+## API Endpoints (available after deployment)
 
 | Method | Endpoint                     | Description                          |
 |--------|------------------------------|--------------------------------------|
@@ -97,7 +97,7 @@ SignalRoom ingests culture signals from Reddit + RSS, clusters conversations int
 
 ---
 
-## 🧠 AI Brief Generation
+## AI Brief Generation
 
 - Uses **OpenAI `gpt-4o-mini`** (as configured in `OPENAI_MODEL`).
 - Prompt asks for a 2‑3 sentence summary and three bullet points with actionable marketing insights.
@@ -105,7 +105,7 @@ SignalRoom ingests culture signals from Reddit + RSS, clusters conversations int
 
 ---
 
-## 📁 Local Development (optional)
+## Local Development (optional)
 
 If you want to run the project locally instead of deploying:
 
@@ -123,3 +123,12 @@ cd frontend
 npm install
 echo "NEXT_PUBLIC_API_URL=http://localhost:8000/api" > .env.local
 npm run dev
+
+---
+
+## Screenshots
+
+![Dashboard](screenshots/dashboard.png)
+![Cluster Detail](screenshots/cluster.png)
+![AI Summary](screenshots/summary.png)
+
